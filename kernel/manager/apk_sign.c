@@ -123,13 +123,18 @@ static bool check_block(struct file *fp, loff_t *pos, loff_t block_end, unsigned
         return false;
     }
 
-    char cert[CERT_MAX_LENGTH];
-    if (!read_exact(fp, cert, certificate_size, pos, certificates_end))
+    char *cert = kmalloc(certificate_size, GFP_KERNEL);
+    if (!cert)
         return false;
+    if (!read_exact(fp, cert, certificate_size, pos, certificates_end)) {
+        kfree(cert);
+        return false;
+    }
 
     unsigned char digest[SHA256_DIGEST_SIZE];
     if (ksu_sha256(cert, certificate_size, digest)) {
         pr_info("sha256 error\n");
+        kfree(cert);
         return false;
     }
 
@@ -138,7 +143,9 @@ static bool check_block(struct file *fp, loff_t *pos, loff_t block_end, unsigned
 
     bin2hex(hash_str, digest, SHA256_DIGEST_SIZE);
     pr_info("sha256: %s, expected: %s\n", hash_str, expected_sha256);
-    return strcmp(expected_sha256, hash_str) == 0;
+    bool match = strcmp(expected_sha256, hash_str) == 0;
+    kfree(cert);
+    return match;
 }
 
 static __always_inline bool check_v2_signature(char *path, unsigned expected_size, const char *expected_sha256)
