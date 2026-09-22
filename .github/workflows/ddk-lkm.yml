@@ -2,6 +2,17 @@ name: Build KernelSU Kernel Module
 
 on:
   workflow_dispatch:
+    inputs:
+      kmi:
+        description: 'KMI version'
+        required: true
+        default: 'android15-6.6'
+        type: string
+      ddk_release:
+        description: 'DDK release version'
+        required: false
+        default: '20260828'
+        type: string
   workflow_call:
     inputs:
       kmi:
