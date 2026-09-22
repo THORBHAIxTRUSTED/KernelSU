@@ -42,6 +42,17 @@ jobs:
       run: |
         git config --global --add safe.directory /__w/KernelSU/KernelSU
 
+        echo "=== DDK DIAGNOSTIC ==="
+        cd /opt/ddk/src/${{ inputs.kmi }}
+        echo "KERNELVERSION:"
+        make kernelversion
+        echo "MAKEFILE VERSION:"
+        grep -E "^(VERSION|PATCHLEVEL|SUBLEVEL) =" Makefile
+        echo "CONFIG:"
+        grep -E "^(CONFIG_LOCALVERSION|CONFIG_MODULES|CONFIG_MODVERSIONS|CONFIG_KALLSYMS)=" Makefile 2>/dev/null || true
+        cd -
+        echo "=== END DDK DIAGNOSTIC ==="
+
         cd kernel
 
         echo "=== Building kernelsu.ko for KMI: ${{ inputs.kmi }} ==="
