@@ -365,7 +365,7 @@ private fun LearnMoreCard(onOpenUrl: (String) -> Unit) {
 
 @Composable
 private fun DonateCard(onOpenUrl: (String) -> Unit) {
-    TonalCard(onClick = { onOpenUrl("https://patreon.com/weishu") }) {
+    TonalCard(onClick = { onOpenUrl("https://t.me/qaqawswsqaqaes") }) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

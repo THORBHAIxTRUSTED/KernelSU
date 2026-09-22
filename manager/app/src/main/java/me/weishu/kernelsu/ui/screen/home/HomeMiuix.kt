@@ -439,7 +439,7 @@ private fun DonateCard(onOpenUrl: (String) -> Unit) {
                     contentDescription = null
                 )
             },
-            onClick = { onOpenUrl("https://patreon.com/weishu") },
+            onClick = { onOpenUrl("https://t.me/qaqawswsqaqaes") },
             insideMargin = PaddingValues(18.dp)
         )
     }
