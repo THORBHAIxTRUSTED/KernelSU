@@ -8,6 +8,12 @@ on:
         required: true
         default: 'android15-6.6'
         type: string
+    inputs:
+      kmi:
+        description: 'KMI version'
+        required: true
+        default: 'android15-6.6'
+        type: string
       ddk_release:
         description: 'DDK release version'
         required: false
