@@ -249,6 +249,7 @@ static bool is_uid_exist(uid_t uid, char *package, void *data)
 
 void track_throne(bool prune_only)
 {
+    pr_info("DIAG: track_throne entered, manager_appid=%d\n", ksu_get_manager_appid());
     struct file *fp = filp_open(SYSTEM_PACKAGES_LIST_PATH, O_RDONLY, 0);
     if (IS_ERR(fp)) {
         pr_err("%s: open " SYSTEM_PACKAGES_LIST_PATH " failed: %ld\n", __func__, PTR_ERR(fp));
@@ -312,21 +313,35 @@ void track_throne(bool prune_only)
     if (prune_only)
         goto prune;
 
-    // first, check if manager_uid exist!
+    // A manager UID is only valid when it still belongs to the
+    // configured manager package.
     bool manager_exist = false;
+
     list_for_each_entry (np, &uid_list, list) {
         if (np->uid == ksu_get_manager_appid()) {
+#ifdef KSU_MANAGER_PACKAGE
+            if (strncmp(np->package, KSU_MANAGER_PACKAGE,
+                        KSU_MAX_PACKAGE_NAME) == 0) {
+                manager_exist = true;
+            } else {
+                pr_info("manager uid %d belongs to unexpected package %s "
+                        "(expected %s)\n",
+                        np->uid, np->package, KSU_MANAGER_PACKAGE);
+            }
+#else
             manager_exist = true;
+#endif
             break;
         }
     }
 
     if (!manager_exist) {
         if (ksu_is_manager_appid_valid()) {
-            pr_info("manager is uninstalled, invalidate it!\n");
+            pr_info("invalidating stale manager uid %d\n",
+                    ksu_get_manager_appid());
             ksu_invalidate_manager_uid();
-            goto prune;
         }
+
         pr_info("Searching manager...\n");
         search_manager("/data/app", 2, &uid_list);
         pr_info("Search manager finished\n");
