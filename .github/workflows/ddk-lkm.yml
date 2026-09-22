@@ -1,6 +1,7 @@
 name: Build KernelSU Kernel Module
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       kmi:
