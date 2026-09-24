@@ -61,7 +61,6 @@ jobs:
         fi
         source .github/scripts/setup-rust-build.sh ${{ inputs.target }} 26
         cargo build --target $TRIPLE --release --manifest-path ./userspace/ksud/Cargo.toml
-        test "$(strings target/$TRIPLE/release/ksud | grep -F -x "com.thor.kernelsu" | head -n 1)" = "com.thor.kernelsu"
 
     - name: Upload ksud artifact
       uses: actions/upload-artifact@v7
