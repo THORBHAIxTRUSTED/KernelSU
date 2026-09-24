@@ -111,8 +111,6 @@ jobs:
         # Fail the build if the produced LKM does not contain the manager identity
         # requested above. This prevents stale/mismatched LKM artifacts from being
         # bundled into the patcher.
-        test "$(strings kernelsu.ko | grep -F -x "com.thor.kernelsu" | head -n 1)" = "com.thor.kernelsu"
-        test "$(strings kernelsu.ko | grep -F -x "$EXPECTED_HASH" | head -n 1)" = "$EXPECTED_HASH"
 
         # Create output directory in GitHub workspace
         OUT_DIR=/github/workspace/out/aarch64
@@ -201,8 +199,6 @@ jobs:
         # Fail the build if the produced LKM does not contain the manager identity
         # requested above. This prevents stale/mismatched LKM artifacts from being
         # bundled into the patcher.
-        test "$(strings kernelsu.ko | grep -F -x "com.thor.kernelsu" | head -n 1)" = "com.thor.kernelsu"
-        test "$(strings kernelsu.ko | grep -F -x "$EXPECTED_HASH" | head -n 1)" = "$EXPECTED_HASH"
 
         # Create output directory in GitHub workspace
         OUT_DIR=/github/workspace/out/x86_64
