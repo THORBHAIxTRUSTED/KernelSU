@@ -52,5 +52,3 @@ jobs:
       kmi: ${{ matrix.kmi }}
       expected_size: ${{ inputs.expected_size || '0x0208' }}
       expected_hash: ${{ inputs.expected_hash || 'fb3cda80dfdac6c2e5d32d080e6c35b58e606f545cbb873aad3ba0bb79866462' }}
-      expected_size2: ${{ inputs.expected_size2 || '' }}
-      expected_hash2: ${{ inputs.expected_hash2 || '' }}
