@@ -13,6 +13,16 @@ on:
         required: false
         default: '20260828'
         type: string
+      expected_size:
+        description: 'Manager certificate size'
+        required: false
+        default: '0x0208'
+        type: string
+      expected_hash:
+        description: 'Manager certificate SHA-256'
+        required: false
+        default: 'fb3cda80dfdac6c2e5d32d080e6c35b58e606f545cbb873aad3ba0bb79866462'
+        type: string
 
   workflow_call:
     inputs:
@@ -24,6 +34,16 @@ on:
         description: 'DDK release version'
         required: false
         default: '20260828'
+        type: string
+      expected_size:
+        description: 'Manager certificate size'
+        required: false
+        default: '0x0208'
+        type: string
+      expected_hash:
+        description: 'Manager certificate SHA-256'
+        required: false
+        default: 'fb3cda80dfdac6c2e5d32d080e6c35b58e606f545cbb873aad3ba0bb79866462'
         type: string
       expected_size2:
         description: 'Second expected signature size (for PR builds)'
@@ -50,6 +70,8 @@ jobs:
 
     - name: Build kernelsu.ko
       env:
+        EXPECTED_SIZE: ${{ inputs.expected_size }}
+        EXPECTED_HASH: ${{ inputs.expected_hash }}
         EXPECTED_SIZE2: ${{ inputs.expected_size2 }}
         EXPECTED_HASH2: ${{ inputs.expected_hash2 }}
       run: |
@@ -82,9 +104,15 @@ jobs:
         if [ -n "$EXPECTED_SIZE2" ]; then
           EXTRA_ARGS="KSU_EXPECTED_SIZE2=$EXPECTED_SIZE2 KSU_EXPECTED_HASH2=$EXPECTED_HASH2"
         fi
-        CONFIG_KSU=m KSU_MANAGER_PACKAGE=com.thor.kernelsu KSU_EXPECTED_SIZE=0x0208 KSU_EXPECTED_HASH=fb3cda80dfdac6c2e5d32d080e6c35b58e606f545cbb873aad3ba0bb79866462 CC=clang make $EXTRA_ARGS
+        CONFIG_KSU=m KSU_MANAGER_PACKAGE=com.thor.kernelsu KSU_EXPECTED_SIZE="$EXPECTED_SIZE" KSU_EXPECTED_HASH="$EXPECTED_HASH" CC=clang make $EXTRA_ARGS
         
         echo "=== Build completed ==="
+
+        # Fail the build if the produced LKM does not contain the manager identity
+        # requested above. This prevents stale/mismatched LKM artifacts from being
+        # bundled into the patcher.
+        test "$(strings kernelsu.ko | grep -F -x "com.thor.kernelsu" | head -n 1)" = "com.thor.kernelsu"
+        test "$(strings kernelsu.ko | grep -F -x "$EXPECTED_HASH" | head -n 1)" = "$EXPECTED_HASH"
 
         # Create output directory in GitHub workspace
         OUT_DIR=/github/workspace/out/aarch64
@@ -108,6 +136,8 @@ jobs:
 
     - name: Build kernelsu.ko for x64
       env:
+        EXPECTED_SIZE: ${{ inputs.expected_size }}
+        EXPECTED_HASH: ${{ inputs.expected_hash }}
         EXPECTED_SIZE2: ${{ inputs.expected_size2 }}
         EXPECTED_HASH2: ${{ inputs.expected_hash2 }}
       run: |
@@ -167,6 +197,12 @@ jobs:
         fi
         
         echo "=== Build completed ==="
+
+        # Fail the build if the produced LKM does not contain the manager identity
+        # requested above. This prevents stale/mismatched LKM artifacts from being
+        # bundled into the patcher.
+        test "$(strings kernelsu.ko | grep -F -x "com.thor.kernelsu" | head -n 1)" = "com.thor.kernelsu"
+        test "$(strings kernelsu.ko | grep -F -x "$EXPECTED_HASH" | head -n 1)" = "$EXPECTED_HASH"
 
         # Create output directory in GitHub workspace
         OUT_DIR=/github/workspace/out/x86_64
