@@ -200,6 +200,7 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
+        run: echo "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n 1)" >> "$GITHUB_PATH"
 
       - name: Build with Gradle
         run: |
@@ -245,6 +246,7 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
+        run: echo "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n 1)" >> "$GITHUB_PATH"
 
       - name: Download gradle manager artifact
         uses: actions/download-artifact@v8
