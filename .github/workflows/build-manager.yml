@@ -267,7 +267,7 @@ jobs:
       - name: Place manager apk and ksud artifacts
         run: |
           mkdir -p manager/app/build/outputs/apk/release
-          APK=$(find artifacts/manager-gradle -type f -name "*.apk" | head -n 1)
+          APK=$(find artifacts/manager-build-internal -type f -name "*.apk" | head -n 1)
           test -n "$APK"
           cp -f "$APK" manager/app/build/outputs/apk/release/
 
