@@ -247,7 +247,7 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v4
-        - name: Add Android build-tools to PATH
+      - name: Add Android build-tools to PATH
         run: echo "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n 1)" >> "$GITHUB_PATH"
 
       - name: Download gradle manager artifact
