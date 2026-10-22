@@ -1,7 +1,6 @@
-Claude signing certificate (v3, replaces leaked key)
+Claude signing certificate (pair 2)
 Alias: Claude
-DER size: 827 bytes (0x033B)  <- same size as the old key
-SHA-256: b1178f3d84bf512b581e5850757341bf96d3d85229549597762ccfcaf6706ef7
+DER size: 827 bytes (0x033B)
+SHA-256: c3c2ba06f48b36f6c4617fe81d05ec0d5847a20a30283488bf99fbe6d5757622
 Signature algorithm: SHA384withRSA
 Public key: RSA 2048-bit
-Old key (SHA-256 0ac7c92e...c3298d9) is no longer accepted by the kernel module.
