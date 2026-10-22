@@ -173,7 +173,7 @@ else
 KSU_PACKAGE_NAME ?= com.anthropic.claude.pr
 endif
 KSU_EXPECTED_SIZE ?= 0x033b
-KSU_EXPECTED_HASH ?= c3c2ba06f48b36f6c4617fe81d05ec0d5847a20a30283488bf99fbe6d5757622
+KSU_EXPECTED_HASH ?= 7b0f2dd4b772cd3982eb4ac0b1819e90259bc3c36879002abd3842871fc175e9
 
 $(info -- KernelSU Manager package name: $(KSU_PACKAGE_NAME))
 $(info -- KernelSU Manager signature size: $(KSU_EXPECTED_SIZE))
