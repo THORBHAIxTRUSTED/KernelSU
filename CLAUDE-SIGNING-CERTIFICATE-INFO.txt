@@ -1,6 +1,6 @@
-Claude signing certificate (pair 7)
+Claude signing certificate (pair 8)
 Alias: Claude
 DER size: 827 bytes (0x033B)
-SHA-256: d0eba1954ec18040e2c987fe027530efd5f21ea223fb78d2cda81d74bd5c70e7
+SHA-256: 4aee065d8cacc30960874848141ce09c5b00a47f9a139558a9132cfa2bb05300
 Signature algorithm: SHA384withRSA
 Public key: RSA 2048-bit
