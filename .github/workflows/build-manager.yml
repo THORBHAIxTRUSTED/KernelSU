@@ -2,7 +2,7 @@ name: Build Manager
 
 on:
   push:
-    branches: [main, dev, ci, Claude, "Cloud"]
+    branches: ["main", "dev", "ci", "Claude", "Cloud"]
     paths:
       - '.github/workflows/build-manager.yml'
       - '.github/workflows/build-lkm.yml'
