@@ -98,10 +98,10 @@ jobs:
     needs: generate-key
     uses: ./.github/workflows/build-lkm.yml
     with:
-      # Keep the kernel module package aligned with the manager APK.
-      package_name: ${{ github.event_name == 'pull_request' && 'com.anthropic.claude.pr' || 'com.anthropic.claude' }}
       expected_size: ${{ needs.generate-key.outputs.expected_size || '' }}
       expected_hash: ${{ needs.generate-key.outputs.expected_hash || '' }}
+      # Keep the kernel module package aligned with the manager APK.
+      package_name: ${{ github.event_name == 'pull_request' && 'com.anthropic.claude.pr' || 'com.anthropic.claude' }}
     secrets: inherit
 
   build-ksuinit:
