@@ -40,6 +40,8 @@ kernelsu-objs += policy/feature.o
 kernelsu-objs += runtime/boot_event.o
 kernelsu-objs += runtime/ksud_integration.o
 
+kernelsu-objs += infra/btf_parser.o
+kernelsu-objs += selinux/inode.o
 kernelsu-objs += selinux/selinux.o
 kernelsu-objs += selinux/rules.o
 kernelsu-objs += selinux/sepolicy.o
@@ -173,7 +175,7 @@ else
 KSU_PACKAGE_NAME ?= com.anthropic.claude.pr
 endif
 KSU_EXPECTED_SIZE ?= 0x033b
-KSU_EXPECTED_HASH ?= d7656efacc3b749170a8039a00aee60cbcadd24f57c708f30b1c3fcf528b9e4a
+KSU_EXPECTED_HASH ?= 27df85e3038939479980e2d69269712a6d712350ac33d97d6be0145d51b4b5ef
 
 $(info -- KernelSU Manager package name: $(KSU_PACKAGE_NAME))
 $(info -- KernelSU Manager signature size: $(KSU_EXPECTED_SIZE))
