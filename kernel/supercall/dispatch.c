@@ -804,11 +804,11 @@ out:
 // IOCTL handlers mapping table
 // clang-format off
 static const struct ksu_ioctl_cmd_map ksu_ioctl_handlers[] = {
-    {
+    { 
         .cmd = KSU_IOCTL_GRANT_ROOT,
         .name = "GRANT_ROOT",
         .handler = do_grant_root,
-        .perm_check = allowed_for_su
+        .perm_check = allowed_for_su 
     },
     {
         .cmd = KSU_IOCTL_GET_INFO,

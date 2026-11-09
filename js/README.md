@@ -369,7 +369,7 @@ if (!id) {
     raf.writeInt(id, 42);
     raf.seek(id, 1024);
     console.log(raf.readInt(id));
-
+    
     raf.close(id);
 }
 ```
