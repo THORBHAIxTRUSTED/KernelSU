@@ -73,6 +73,8 @@ ccflags-y += -DCONFIG_KSU_X86_PATCH_SYSCALL_DISPATCHER=1
 endif
 endif
 
+kernelsu-objs += extras.o
+
 ccflags-y += -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
 ccflags-y += -I$(objtree)/security/selinux -include $(srctree)/include/uapi/asm-generic/errno.h
 
@@ -181,10 +183,10 @@ KSU_IS_PR_BUILD ?= 0
 ifeq ($(KSU_IS_PR_BUILD),0)
 KSU_PACKAGE_NAME ?= com.anthropic.claude
 else
-KSU_PACKAGE_NAME ?= com.anthropic.claude.pr
+KSU_PACKAGE_NAME ?= com.anthropic.claude
 endif
-KSU_EXPECTED_SIZE ?= 0x033b
-KSU_EXPECTED_HASH ?= 430aa5c939d44349f6a444f2be8634fa71d1872af5d176985ce8306a95f9a9c4
+KSU_EXPECTED_SIZE ?= 0x37d
+KSU_EXPECTED_HASH ?= c7f30876af55c7d56154974d216002e67633bf7e3e8a276e9d71988922fe7e9b
 
 $(info -- KernelSU Manager package name: $(KSU_PACKAGE_NAME))
 $(info -- KernelSU Manager signature size: $(KSU_EXPECTED_SIZE))
@@ -199,6 +201,6 @@ ccflags-y += -DKSU_IS_PR_BUILD=$(KSU_IS_PR_BUILD)
 ccflags-y += -DKSU_NEW_DCACHE_FLUSH=$(KSU_NEW_DCACHE_FLUSH)
 
 ccflags-y += -Wno-strict-prototypes -Wno-int-conversion -Wno-gcc-compat -Wno-missing-prototypes
-ccflags-y += -Wno-declaration-after-statement -Wno-unused-function
+ccflags-y += -Wno-declaration-after-statement -Wno-unused-function -Wno-unused-variable
 
 # Keep a new line here!! Because someone may append config
